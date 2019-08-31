@@ -1,5 +1,9 @@
 #!/bin/bash
 
+python ./src/process.py
+
+sleep 60
+
 if [ ! -f config.json ]; then
   cp config.sample.json config.json
   jq .journey.departureStation=\""${departureStation}"\" config.json | sponge config.json
