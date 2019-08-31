@@ -1,6 +1,7 @@
 FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-python:3.7-buster
 
 RUN install_packages \
+        curl \
         dnsmasq \
         wireless-tools \
         jq \
