@@ -2,7 +2,6 @@
 
 # Show 'Not Connected' message
 python ./src/process.py
-sleep 60
 
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
@@ -34,6 +33,7 @@ else
 fi
 
 
+# Start your application here.
 if [ ! -f config.json ]; then
   cp config.sample.json config.json
   jq .journey.departureStation=\""${departureStation}"\" config.json | sponge config.json
@@ -45,7 +45,5 @@ if [ ! -f config.json ]; then
   jq .transportApi.operatingHours=\""${transportApi_operatingHours}"\" config.json | sponge config.json
 fi
 
-# python ./src/main.py
-
-# Start your application here.
-sleep infinity
+python ./src/main.py
+# sleep infinity
