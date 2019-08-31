@@ -1,45 +1,18 @@
 import os
-
-from PIL import ImageFont
-
+import time
 
 from luma.core.interface.serial import spi
-from luma.core.render import canvas
 from luma.oled.device import ssd1322
-
-from open import isRun
-
-def makeFont(name, size):
-    font_path = os.path.abspath(
-        os.path.join(
-            os.path.dirname(__file__),
-            'fonts',
-            name
-        )
-    )
-    return ImageFont.truetype(font_path, size)
-
-
-def drawBlankSignage(device, width, height):
-    with canvas(device) as draw:
-        welcomeSize = draw.textsize("Not Connected", fontBold)
-
-    with canvas(device) as draw:
-        stationSize = draw.textsize("Not Connected 2", fontBold)
+from luma.core.legacy import show_message
+from luma.core.legacy.font import proportional, SINCLAIR_FONT
 
 
 try:
     serial = spi()
     device = ssd1322(serial, mode="1", rotate=2)
-    font = makeFont("Dot Matrix Regular.ttf", 10)
-    fontBold = makeFont("Dot Matrix Bold.ttf", 10)
-    fontBoldTall = makeFont("Dot Matrix Bold Tall.ttf", 10)
-    fontBoldLarge = makeFont("Dot Matrix Bold.ttf", 20)
 
-    widgetWidth = 256
-    widgetHeight = 64
-
-    drawBlankSignage(device, width=widgetWidth, height=widgetHeight)
+    show_message(device, "Not Connected", fill="white", font=proportional(SINCLAIR_FONT))
+    time.sleep(30)
 
 except KeyboardInterrupt:
     pass
