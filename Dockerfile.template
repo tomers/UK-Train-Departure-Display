@@ -1,7 +1,6 @@
 FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-python:3.7-buster
 
 RUN install_packages \
-        curl \
         dnsmasq \
         wireless-tools \
         jq \
@@ -11,13 +10,14 @@ RUN install_packages \
         libjpeg-dev \
         libtiff5
 
+WORKDIR /usr/app
+
 # Install resin-wifi-connect
 RUN curl https://api.github.com/repos/balena-io/wifi-connect/releases/latest -s \
     | grep -hoP 'browser_download_url": "\K.*%%RESIN_ARCH%%\.tar\.gz' \
     | xargs -n1 curl -Ls \
     | tar -xvz -C /usr/app/
 
-WORKDIR /usr/app
 COPY ./requirements.txt .
 
 # Upgrade pip
